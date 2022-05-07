@@ -57,7 +57,11 @@ Currently the following dependencies are in use.
 ### curl
 To create a new process in one of the three approaches:
 ```bash 
-curl -X POST http://localhost:8080/task-manager/addProcess/{approach} -H 'Content-Type: application/json' 
+curl -X POST 'http://localhost:8080/task-manager/addProcess/{approach}' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "priority": "medium"
+}'
 ```
 To retrieve a process in one of the three approaches using process id:
 ```bash
