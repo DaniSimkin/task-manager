@@ -3,10 +3,10 @@ package com.myTaskManager.taskmanager.constants;
 import com.myTaskManager.taskmanager.model.TaskProcess;
 
 public class Utils {
-    public static final Integer MAXIMUM_CAPACITY = 3;
+    public static final Integer MAXIMUM_CAPACITY = 5;
 
-    public static boolean validateModel(TaskProcess taskProcess){
-        if(taskProcess.getPriority() == null || taskProcess.getPid() != null || taskProcess.getCreationTime() != null){
+    public static boolean validateJson(String taskProcess){
+        if(!taskProcess.contains("priority") || taskProcess.contains("pid") || taskProcess.contains("creationTime")){
             return false;
         }
         return true;

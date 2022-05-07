@@ -16,27 +16,32 @@ import java.util.*;
 public class FifoStructure implements DataStructure {
 
     private final EvictingQueue<TaskProcess> evictingQueue = EvictingQueue.create(Utils.MAXIMUM_CAPACITY);
-    private final Map<UUID, TaskProcess> evictingMap = new HashMap<>();
 
     public boolean containsUUID(String pid){
-        return evictingMap.containsKey(UUID.fromString(pid));
+        for (Iterator<TaskProcess> it = evictingQueue.iterator(); it.hasNext();) {
+            if (it.next().getPid().equals(UUID.fromString(pid))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public TaskProcess getByUid(String pid){
-        return evictingMap.get(UUID.fromString(pid));
+        for (Iterator<TaskProcess> it = evictingQueue.iterator(); it.hasNext();) {
+            TaskProcess current = it.next();
+            if (current.getPid().equals(UUID.fromString(pid))) {
+                return current;
+            }
+        }
+        return null;
     }
 
     public void addProcessToStructure(TaskProcess taskProcess){
-        if(evictingQueue.remainingCapacity() == 0){
-            TaskProcess removeFromHead =  evictingQueue.peek();
-            evictingMap.remove(removeFromHead.getPid());
-        }
         evictingQueue.add(taskProcess);
-        evictingMap.put(taskProcess.getPid(), taskProcess);
     }
 
     public List<TaskProcess> getSortedBy(String orderBy){
-        List<TaskProcess> sortedList = new ArrayList<TaskProcess>(evictingMap.values());
+        List<TaskProcess> sortedList = new ArrayList<>(evictingQueue.stream().toList());
         if("time".equalsIgnoreCase(orderBy)){
             sortedList.sort(Comparator.comparing(TaskProcess::getCreationTime));
         }
@@ -53,24 +58,20 @@ public class FifoStructure implements DataStructure {
         if(!containsUUID(pid)){
             throw new ProcessNotExistException();
         }
-        TaskProcess toRemove = getByUid(pid);
-        evictingMap.remove(toRemove.getPid());
-        evictingQueue.remove(toRemove);
+        for (Iterator<TaskProcess> it = evictingQueue.iterator(); it.hasNext();) {
+            TaskProcess current = it.next();
+            if (UUID.fromString(pid).equals(current.getPid())){
+                it.remove();
+            }
+        }
     }
 
     public void killAllProcesses(){
         evictingQueue.clear();
-        evictingMap.clear();
     }
 
     public void killSpecificProcessGroup(String priority){
-        for (Iterator<Map.Entry<UUID,TaskProcess>> it = evictingMap.entrySet().iterator(); it.hasNext();) {
-            Map.Entry<UUID,TaskProcess> e = it.next();
-            if (priority.equalsIgnoreCase(String.valueOf(e.getValue().getPriority()))) {
-                it.remove();
-                evictingQueue.remove(e.getValue());
-            }
-        }
+        evictingQueue.removeIf(current -> priority.equalsIgnoreCase(String.valueOf(current.getPriority())));
     }
 
 

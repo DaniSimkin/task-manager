@@ -55,7 +55,6 @@ public class NaiveStructure implements DataStructure {
     }
 
     public void killSpecificProcessGroup(String priority){
-        //hmap.values().removeAll(Collections.singleton("Two")); Will remove only values but keys will remain null
         for (Iterator<Map.Entry<UUID,TaskProcess>> it = naiveMap.entrySet().iterator(); it.hasNext();) {
             Map.Entry<UUID,TaskProcess> e = it.next();
             if (priority.equalsIgnoreCase(String.valueOf(e.getValue().getPriority()))) {

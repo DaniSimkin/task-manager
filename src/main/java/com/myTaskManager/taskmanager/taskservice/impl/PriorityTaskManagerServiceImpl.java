@@ -2,7 +2,7 @@ package com.myTaskManager.taskmanager.taskservice.impl;
 
 import com.myTaskManager.taskmanager.exception.custom.ProcessNotExistException;
 import com.myTaskManager.taskmanager.model.TaskProcess;
-import com.myTaskManager.taskmanager.structure.impl.PriorityQueueStructure;
+import com.myTaskManager.taskmanager.structure.impl.PriorityStructure;
 import com.myTaskManager.taskmanager.taskservice.TaskManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
 public class PriorityTaskManagerServiceImpl implements TaskManagerService {
 
     @Autowired
-    PriorityQueueStructure priorityStructure;
+    PriorityStructure priorityStructure;
 
     @Override
     public TaskProcess getProcessByPID(String pid) {

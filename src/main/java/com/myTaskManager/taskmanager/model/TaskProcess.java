@@ -27,6 +27,8 @@ public class TaskProcess implements Comparable<TaskProcess> {
 
     public TaskProcess(String priority){
         this.priority = Priority.valueOf(priority);
+        this.creationTime = new Date();
+        this.pid = UUID.randomUUID();
     }
 
     @Override
