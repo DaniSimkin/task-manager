@@ -12,12 +12,8 @@ import java.util.UUID;
 @ToString
 public class TaskProcess implements Comparable<TaskProcess> {
 
-    //@Null
     private Date creationTime;
-    //@Null
     private UUID pid;
-    //@NotBlank(message = "Priority is mandatory")
-    //@NotEmpty(message = "Priority cannot be null")
     private Priority priority;
 
     public TaskProcess(){

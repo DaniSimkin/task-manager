@@ -1,9 +1,7 @@
 package com.myTaskManager.taskmanager.constants;
 
-import com.myTaskManager.taskmanager.model.TaskProcess;
-
 public class Utils {
-    public static final Integer MAXIMUM_CAPACITY = 5;
+    public static final Integer MAXIMUM_CAPACITY = 10;
 
     public static boolean validateJson(String taskProcess){
         if(!taskProcess.contains("priority") || taskProcess.contains("pid") || taskProcess.contains("creationTime")){

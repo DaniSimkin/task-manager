@@ -33,14 +33,8 @@ public class TaskProcessController {
 
     @PostMapping("/addProcess/{approach}")
     public ResponseEntity<String> saveProcess(@PathVariable ("approach") String approach, @RequestBody String taskProcess) throws JsonProcessingException {
-        /*
-        System.out.println("pid: " + taskProcess.getPid() + " Time: " + taskProcess.getCreationTime() + " Priority: " + taskProcess.getPriority());
-        if(!Utils.validateModel(taskProcess)){
-            throw new IllegalArgumentException("Only Priority Is Allowed");
-        }
-         */
         if(!Utils.validateJson(taskProcess)) {
-            return ResponseEntity.badRequest().body("Only Priority Is Allowed");
+            return ResponseEntity.badRequest().body("Only priority attribute Allowed");
         }
         try{
            TaskProcess tp = objectMapper.readValue(taskProcess, TaskProcess.class);
