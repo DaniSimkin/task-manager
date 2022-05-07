@@ -1,9 +1,4 @@
 
-# docker build -t taskmanager .
-# docker run -d -p 8080:8080 taskmanager
-# docker logs <container-name>
-
-
 #
 # Build stage
 #
